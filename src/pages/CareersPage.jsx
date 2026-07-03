@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import Container from '../components/ui/Container'
 import Breadcrumbs from '../components/ui/Breadcrumbs'
 import EventTabs from '../components/sections/EventTabs'
@@ -8,14 +9,27 @@ import { UNIVERSITY, UNIVERSITY_EVENTS } from '../constants/university'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 
 const TABS = [
-  { key: 'records', label: UNIVERSITY.tabs.records },
-  { key: 'schedule', label: UNIVERSITY.tabs.schedule },
+  { key: 'records', label: UNIVERSITY.tabs.records },   // Записи заходів
+  { key: 'schedule', label: UNIVERSITY.tabs.schedule }, // Розклад заходів
 ]
 
+// хеш із мега-меню → ключ таба
+// ⚠️ за прикладом: «Заходи для початківців» (#beginners) → «Розклад заходів».
+//    Якщо треба навпаки — просто поміняй значення тут.
+const HASH_TO_TAB = {
+  beginners: 'schedule',
+  universities: 'records',
+}
+
 export default function UniversityPage() {
-  useDocumentTitle('Університет')                         
+  useDocumentTitle('Університет')
+  const { hash } = useLocation()
   const [tab, setTab] = useState('records')
 
+  useEffect(() => {
+    const key = hash.replace('#', '')
+    if (HASH_TO_TAB[key]) setTab(HASH_TO_TAB[key])
+  }, [hash])
 
   return (
     <Container className="pb-16 md:pb-24">

@@ -1,23 +1,35 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import Container from '../components/ui/Container'
 import Breadcrumbs from '../components/ui/Breadcrumbs'
 import EventTabs from '../components/sections/EventTabs'
 import EventCard from '../components/sections/EventCard'
 import EmptyEvents from '../components/sections/EmptyEvents'
 import { EVENTS, EVENTS_RECORDS } from '../constants/events'
-import { useDocumentTitle } from '../hooks/useDocumentTitle' 
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
+
+// хеш із мега-меню → ключ таба
+const HASH_TO_TAB = {
+  ua: 'ukraine',
+  pl: 'poland',
+  cy: 'cyprus',
+  records: 'records',
+}
 
 export default function EventsPage() {
-  useDocumentTitle('Заходи') 
+  useDocumentTitle('Заходи')
+  const { hash } = useLocation()
   const [tab, setTab] = useState('records')
+
+  // #cy → таб «Заходи на Кіпрі» тощо
+  useEffect(() => {
+    const key = hash.replace('#', '')
+    if (HASH_TO_TAB[key]) setTab(HASH_TO_TAB[key])
+  }, [hash])
 
   return (
     <Container className="pb-16 md:pb-24">
-      {/*
-        ⚠️ Декоративний фон-патерн (помаранчеві «віялові» лінії у правому верхньому
-        куті зони шапки) — URL асета невідомий, лишено як хук. Дай посилання або
-        «апроксимувати» (згенерую inline-SVG).
-      */}
+      {/* ⚠️ декоративний фон-патерн у шапці — хук лишено (URL асета невідомий) */}
       <div className="pt-8 md:pt-12">
         <Breadcrumbs items={EVENTS.breadcrumbs} />
         <h1 className="mt-6 text-4xl font-bold uppercase leading-tight text-ink md:mt-8 md:text-6xl">

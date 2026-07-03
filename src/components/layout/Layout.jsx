@@ -1,11 +1,12 @@
 import { Outlet } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
+import ScrollToHash from '../system/ScrollToHash'
 
 export default function Layout() {
   return (
-    // flex-col + min-h-screen → футер притискається донизу навіть на коротких сторінках
     <div className="flex min-h-screen flex-col">
+      <ScrollToHash />
       <Header />
       <main className="flex-1">
         <Outlet />

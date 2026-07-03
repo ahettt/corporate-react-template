@@ -3,7 +3,10 @@ import { Link } from 'react-router-dom'
 import Section from '../components/ui/Section'
 import Container from '../components/ui/Container'
 import Button from '../components/ui/Button'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
+
 export default function NotFoundPage() {
+  useDocumentTitle('Page not found')
   return (
     <Section>
       <Container className="text-center">

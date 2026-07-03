@@ -7,9 +7,9 @@ import Container from '../ui/Container'
 import Button from '../ui/Button'
 
 const POLICIES = [
-  'Повідомлення про приватність',
-  'Повідомлення про Cookies',
-  'Політика якості',
+  { label: 'Повідомлення про приватність', to: '/privacy-policy' },
+  { label: 'Повідомлення про Cookies', to: '/cookies-policy' },
+  { label: 'Політика якості', to: '/quality-policy' },
 ]
 
 const COPYRIGHT =
@@ -44,18 +44,29 @@ function Stars({ rating = 4.8, count = 5 }) {
   )
 }
 
+const CLUTCH_URL =
+  'https://clutch.co/profile/yalantis?utm_source=widget&utm_medium=2&utm_campaign=widget&utm_content=logo#summary'
+
 function ClutchRating() {
   return (
-    <div className="flex items-center gap-3">
+    <a
+      href={CLUTCH_URL}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="Yalantis rating on Clutch"
+      className="group flex items-center gap-3"
+    >
       <ClutchIcon className="h-12 w-12 shrink-0" />
       <div>
         <div className="flex items-center gap-2">
           <span className="text-2xl font-medium text-white">4.8</span>
           <Stars rating={4.8} />
         </div>
-        <span className="text-sm text-white/60">Yalantis rating on Clutch</span>
+        <span className="text-sm text-white/60 transition-colors group-hover:text-[#ee4234]">
+          Yalantis rating on Clutch
+        </span>
       </div>
-    </div>
+    </a>
   )
 }
 
@@ -138,7 +149,7 @@ export default function Footer() {
             <LinkList links={FOOTER_COLUMNS[2].links} />
           </FooterColumn>
 
-          <FooterColumn title="Контакти" to="/contact" className="lg:col-start-1 lg:row-start-2">
+          <FooterColumn title="Контакти" className="lg:col-start-1 lg:row-start-2">
             <div>
               <p className="text-xs uppercase tracking-wide text-white/50">Електронна пошта</p>
               <a
@@ -153,7 +164,7 @@ export default function Footer() {
           <div className="mt-6 grid grid-cols-2 gap-8 lg:col-start-4 lg:row-span-2 lg:row-start-1 lg:mt-0 lg:grid-cols-1 lg:gap-12">
             {/* Група A */}
             <div className="flex flex-col items-start gap-6">
-              <Button as={Link} to="/careers" variant="outline" className="uppercase tracking-wide">
+              <Button as={Link} to="/vacancies" variant="outline" className="uppercase tracking-wide">
                 Вакансії
               </Button>
               <div className="flex items-center gap-5">
@@ -183,13 +194,15 @@ export default function Footer() {
               <p className="mt-4 max-w-xs text-sm text-white/50">{COPYRIGHT}</p>
               <div className="mt-6 flex flex-col gap-3">
                 {POLICIES.map((p) => (
-                  <a
-                    key={p}
-                    href="#"
+                  <Link
+                    key={p.label}
+                    to={p.to}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-sm text-white/60 underline decoration-white/30 underline-offset-4 transition-colors hover:text-accent hover:decoration-accent"
                   >
-                    {p}
-                  </a>
+                    {p.label}
+                  </Link>
                 ))}
               </div>
             </div>
