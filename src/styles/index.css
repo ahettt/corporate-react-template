@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Кольори */
+  --color-accent: #ff6400;
+  --color-accent-hover: #e85a00;
+  --color-ink: #0e0e10;
+  --color-footer: #1c1e24;
+  --color-muted: #6b6b70;
+  --color-surface: #f7f5f2;
+
+  /* Шрифти */
+  --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Jost", sans-serif;
+
+  /* Радіуси */
+  --radius-pill: 9999px;
+
+  /* Індикатор скролу */
+  --animate-scroll-bounce: scroll-bounce 2.2s ease-in-out infinite;
+
+  @keyframes scroll-bounce {
+    0%   { transform: translate(-50%, 0);    opacity: 0; }
+    12%  { transform: translate(-50%, 0);    opacity: 1; }
+    25%  { transform: translate(-50%, -2px); opacity: 1; }
+    60%  { transform: translate(-50%, 31px); opacity: 1; }
+    73%  { transform: translate(-50%, 29px); opacity: 1; }
+    90%  { transform: translate(-50%, 29px); opacity: 0; }
+    100% { transform: translate(-50%, 0);    opacity: 0; }
+  }
+
+  /* === Drag hint === */
+
+  /* Рука: спокій 0.5s → ліворуч → праворуч (макс) → назад справа наліво */
+  --animate-hint-hand: hint-hand 2s ease-in-out infinite;
+
+  @keyframes hint-hand {
+    0%, 25% { transform: rotate(0deg); }    /* спокій ~0.5s */
+    42%     { transform: rotate(-9deg); }   /* ліворуч */
+    70%     { transform: rotate(18deg); }   /* праворуч — максимум */
+    100%    { transform: rotate(0deg); }    /* повернення справа наліво в центр */
+  }
+
+  /* Лівий наконечник «<»: лише зсув */
+  --animate-hint-arrow-left: hint-arrow-left 2s ease-in-out infinite;
+
+  @keyframes hint-arrow-left {
+    0%, 25% { transform: translateX(0); }
+    42%     { transform: translateX(-7px); }
+    56%     { transform: translateX(0); }
+    100%    { transform: translateX(0); }
+  }
+
+  /* Правий наконечник «>»: лише зсув */
+  --animate-hint-arrow-right: hint-arrow-right 2s ease-in-out infinite;
+
+  @keyframes hint-arrow-right {
+    0%, 56% { transform: translateX(0); }
+    70%     { transform: translateX(8px); }
+    100%    { transform: translateX(0); }
+  }
+
+  /* Центральна лінія: translateX (першим) + scaleX → односторонній ріст */
+  --animate-hint-arrow-line: hint-arrow-line 2s ease-in-out infinite;
+
+  @keyframes hint-arrow-line {
+    0%, 25% { transform: translateX(0) scaleX(1); }
+    42%     { transform: translateX(-3.5px) scaleX(1.44); }  /* росте вліво */
+    56%     { transform: translateX(0) scaleX(1); }          /* центр — спокій */
+    70%     { transform: translateX(4px) scaleX(1.5); }      /* росте вправо */
+    100%    { transform: translateX(0) scaleX(1); }
+  }
+}
